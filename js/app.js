@@ -5,7 +5,6 @@ function AppState() {
 }
 
 AppState.prototype.instantiateProducts = function () {
-
   const productNames = ['bag', 'banana', 'bathroom', 'boots', 'breakfast', 'bubblegum', 'chair', 'cthulhu', 'dog-duck', 'dragon', 'pen', 'pet-sweep', 'scissors', 'shark', 'sweep', 'tauntaun', 'unicorn', 'water-can', 'wine-glass'];
 
   for (let i = 0; i < productNames.length; i++) {
@@ -20,13 +19,18 @@ AppState.prototype.instantiateProducts = function () {
 
 AppState.prototype.saveToLocalStorage = function () {
   // TODO: Fill in this instance method to save product data to local storage
+  localStorage.setItem('allProducts', JSON.stringify(this.allProducts));
 }
 
 AppState.prototype.loadItems = function () {
 
   // TODO: Update this instance method to retrieve data from local storage instead of creating new Products on each page load
-
-  this.instantiateProducts();
+  const localStoredProducts = JSON.parse(localStorage.getItem('allProducts'));
+  if(localStoredProducts) {
+    this.allProducts = localStoredProducts;
+  } else {
+    this.instantiateProducts();
+  }
 
 }
 
